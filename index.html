@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wisata Pangradinan - Destinasi Wisata Terbaik</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-mountain"></i>
+                <span>Wisata Pangradinan</span>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#beranda" class="nav-link active">Beranda</a></li>
+                <li><a href="#galeri" class="nav-link">Galeri</a></li>
+                <li><a href="#video" class="nav-link">Video</a></li>
+                <li><a href="#paket" class="nav-link">Paket Wisata</a></li>
+                <li><a href="#kontak" class="nav-link">Kontak</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="beranda" class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-badge">Destinasi Wisata Terbaik</div>
+            <h1 class="hero-title">Wisata Pangradinan</h1>
+            <p class="hero-subtitle">Nikmati keindahan alam yang memukau dengan pemandangan hijau yang menyegarkan</p>
+            <div class="hero-location">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Desa Mekarlaksana, Kec. Cikancung, Kab. Bandung, Jawa Barat</span>
+            </div>
+            <div class="hero-buttons">
+                <a href="#paket" class="btn-primary">Lihat Paket Wisata</a>
+                <a href="#kontak" class="btn-secondary">Hubungi Kami</a>
+            </div>
+        </div>
+        <div class="hero-scroll">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <h2>Tentang Wisata Pangradinan</h2>
+                <p>Wisata Pangradinan merupakan destinasi wisata alam yang menawan, terletak di kawasan yang asri dan sejuk. Tempat ini menawarkan pemandangan alam yang indah, udara segar, dan berbagai aktivitas menarik untuk keluarga dan wisatawan.</p>
+                <div class="features">
+                    <div class="feature-item">
+                        <i class="fas fa-tree"></i>
+                        <h3>Alam Asri</h3>
+                        <p>Dikelilingi pemandangan hijau yang menyegarkan</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-camera"></i>
+                        <h3>Spot Foto</h3>
+                        <p>Banyak spot foto instagramable</p>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fas fa-users"></i>
+                        <h3>Family Friendly</h3>
+                        <p>Cocok untuk wisata keluarga</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="galeri" class="gallery">
+        <div class="container">
+            <h2 class="section-title">Galeri Foto</h2>
+            <p class="section-subtitle">Lihat keindahan Wisata Pangradinan</p>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Photos will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+<!-- Video Section -->
+<section id="video" class="video-section">
+    <div class="container">
+        <h2 class="section-title">Video Wisata</h2>
+        <p class="section-subtitle">Jelajahi Pangradinan melalui video</p>
+        <div class="video-container">
+            <div class="video-wrapper">
+                <iframe 
+                    src="https://www.youtube.com/embed/Z6LWu06pU9E"
+                    title="Video Wisata Pangradinan"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <p class="video-note"></p>
+        </div>
+    </div>
+</section>
+
+    <!-- Packages Section -->
+    <section id="paket" class="packages">
+        <div class="container">
+            <h2 class="section-title">Paket Wisata</h2>
+            <p class="section-subtitle">Pilih paket wisata yang sesuai untuk Anda</p>
+            <div class="packages-grid">
+                <div class="package-card">
+                    <div class="package-icon">
+                        <i class="fas fa-ticket-alt"></i>
+                    </div>
+                    <h3>Paket Reguler</h3>
+                    <p class="package-desc">Cocok untuk kunjungan individual atau pasangan</p>
+                    <div class="package-price">
+                        <span class="currency">Rp</span>
+                        <span class="price">50.000</span>
+                        <span class="per">/ orang</span>
+                    </div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check-circle"></i> Tiket Masuk Wisata</li>
+                        <li><i class="fas fa-check-circle"></i> Akses Area Parkir</li>
+                        <li><i class="fas fa-check-circle"></i> Spot Foto Instagramable</li>
+                        <li><i class="fas fa-check-circle"></i> Toilet & Mushola Bersih</li>
+                    </ul>
+                    <button class="btn-package">Pilih Paket Ini</button>
+                </div>
+
+                <div class="package-card featured">
+                    <div class="popular-badge">
+                        <i class="fas fa-star"></i> PALING POPULER
+                    </div>
+                    <div class="package-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Paket Keluarga</h3>
+                    <p class="package-desc">Paket hemat untuk liburan keluarga</p>
+                    <div class="package-price">
+                        <span class="currency">Rp</span>
+                        <span class="price">150.000</span>
+                        <span class="per">/ 4 orang</span>
+                    </div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check-circle"></i> Tiket Masuk 4 Orang</li>
+                        <li><i class="fas fa-check-circle"></i> Akses Area Parkir Gratis</li>
+                        <li><i class="fas fa-check-circle"></i> Spot Foto Premium</li>
+                        <li><i class="fas fa-check-circle"></i> Gazebo Keluarga 2 Jam</li>
+                        <li><i class="fas fa-check-circle"></i> Welcome Drink 4 Gelas</li>
+                    </ul>
+                    <button class="btn-package">Pilih Paket Ini</button>
+                </div>
+
+                <div class="package-card">
+                    <div class="package-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3>Paket VIP</h3>
+                    <p class="package-desc">Pengalaman wisata eksklusif dan mewah</p>
+                    <div class="package-price">
+                        <span class="currency">Rp</span>
+                        <span class="price">300.000</span>
+                        <span class="per">/ 6 orang</span>
+                    </div>
+                    <ul class="package-features">
+                        <li><i class="fas fa-check-circle"></i> Tiket Masuk 6 Orang</li>
+                        <li><i class="fas fa-check-circle"></i> Parkir VIP Eksklusif</li>
+                        <li><i class="fas fa-check-circle"></i> Akses Semua Spot Foto</li>
+                        <li><i class="fas fa-check-circle"></i> Gazebo VIP 4 Jam</li>
+                        <li><i class="fas fa-check-circle"></i> Paket Makan Siang</li>
+                        <li><i class="fas fa-check-circle"></i> Free Dokumentasi Foto</li>
+                    </ul>
+                    <button class="btn-package">Pilih Paket Ini</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="kontak" class="contact">
+        <div class="container">
+            <h2 class="section-title">Hubungi Kami</h2>
+            <p class="section-subtitle">Kami siap membantu Anda merencanakan liburan terbaik</p>
+            
+            <div class="contact-layout">
+                <div class="contact-left">
+                    <div class="contact-intro">
+                        <h3>Mari Berkunjung ke Wisata Pangradinan</h3>
+                        <p>Jangan ragu untuk menghubungi kami jika Anda memiliki pertanyaan atau ingin reservasi. Tim kami siap melayani Anda!</p>
+                    </div>
+                    
+                    <div class="contact-info-list">
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="contact-info-content">
+                                <h4>Alamat Lokasi</h4>
+                                <p>Desa Mekarlaksana, Kecamatan Cikancung, Kabupaten Bandung, Jawa Barat</p>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div class="contact-info-content">
+                                <h4>Nomor Telepon</h4>
+                                <p>+62 812-3456-7890</p>
+                                <a href="tel:+6281234567890" class="contact-action">
+                                    <i class="fas fa-phone"></i> Telepon Sekarang
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-info-content">
+                                <h4>Email Kami</h4>
+                                <p>info@wisatapangradinan.com</p>
+                                <a href="mailto:info@wisatapangradinan.com" class="contact-action">
+                                    <i class="fas fa-envelope"></i> Kirim Email
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-info-item">
+                            <div class="contact-info-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="contact-info-content">
+                                <h4>Jam Operasional</h4>
+                                <p>Senin - Minggu: 08.00 - 17.00 WIB<br>
+                                   <small>Buka Setiap Hari (Termasuk Libur Nasional)</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-right">
+                    <div class="contact-form-box">
+                        <div class="form-header">
+                            <i class="fas fa-paper-plane"></i>
+                            <h3>Kirim Pesan Kepada Kami</h3>
+                            <p>Isi formulir dan kami akan merespon dalam 24 jam</p>
+                        </div>
+                        <form id="contactForm" class="contact-form">
+                            <div class="form-group">
+                                <label><i class="fas fa-user"></i> Nama Lengkap</label>
+                                <input type="text" placeholder="Masukkan nama lengkap Anda" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label><i class="fas fa-envelope"></i> Email</label>
+                                    <input type="email" placeholder="email@example.com" required>
+                                </div>
+                                <div class="form-group">
+                                    <label><i class="fas fa-phone"></i> Telepon</label>
+                                    <input type="tel" placeholder="08xx xxxx xxxx">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fas fa-comment-alt"></i> Pesan Anda</label>
+                                <textarea placeholder="Tulis pertanyaan atau pesan Anda di sini..." rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn-submit-form">
+                                <i class="fas fa-paper-plane"></i> Kirim Pesan
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-mountain"></i>
+                        <h3>Wisata Pangradinan</h3>
+                    </div>
+                    <p>Destinasi wisata alam terbaik di Bandung dengan pemandangan yang memukau dan udara yang sejuk. Nikmati keindahan alam bersama keluarga tercinta.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Link Cepat</h3>
+                    <ul class="footer-links">
+                        <li><a href="#beranda"><i class="fas fa-chevron-right"></i> Beranda</a></li>
+                        <li><a href="#galeri"><i class="fas fa-chevron-right"></i> Galeri Foto</a></li>
+                        <li><a href="#video"><i class="fas fa-chevron-right"></i> Video Wisata</a></li>
+                        <li><a href="#paket"><i class="fas fa-chevron-right"></i> Paket Wisata</a></li>
+                        <li><a href="#kontak"><i class="fas fa-chevron-right"></i> Hubungi Kami</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Informasi Kontak</h3>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Desa Mekarlaksana, Cikancung<br>Kabupaten Bandung, Jawa Barat</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone-alt"></i>
+                            <span>+62 812-3456-7890</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@wisatapangradinan.com</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>Setiap Hari: 08.00 - 17.00 WIB</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Wisata Pangradinan. Semua Hak Dilindungi.</p>
+                <div class="footer-bottom-links">
+                    <a href="#">Kebijakan Privasi</a>
+                    <span>|</span>
+                    <a href="#">Syarat & Ketentuan</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
