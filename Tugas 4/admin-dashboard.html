@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Wisata Pangradinan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #2c3e50;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100vh;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-header i {
+            font-size: 2rem;
+        }
+
+        .sidebar-header h2 {
+            font-size: 1.3rem;
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .sidebar-header h2 {
+            opacity: 0;
+            display: none;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .sidebar-menu li {
+            margin: 5px 0;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: rgba(255,255,255,0.15);
+            border-left: 4px solid white;
+        }
+
+        .sidebar-menu a i {
+            font-size: 1.3rem;
+            width: 25px;
+            text-align: center;
+        }
+
+        .sidebar-menu a span {
+            transition: opacity 0.3s ease;
+        }
+
+        .sidebar.collapsed .sidebar-menu a span {
+            opacity: 0;
+            display: none;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.expanded {
+            margin-left: 80px;
+        }
+
+        /* Top Bar */
+        .topbar {
+            background: white;
+            padding: 15px 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .topbar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .toggle-sidebar {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: #2c3e50;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-sidebar:hover {
+            color: #2ecc71;
+        }
+
+        .topbar h1 {
+            font-size: 1.5rem;
+            color: #2c3e50;
+        }
+
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-avatar {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .admin-name {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .admin-name strong {
+            font-size: 0.95rem;
+            color: #2c3e50;
+        }
+
+        .admin-name small {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .btn-logout {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-logout:hover {
+            background: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231,76,60,0.3);
+        }
+
+        /* Dashboard Content */
+        .dashboard-content {
+            padding: 30px;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+        }
+
+        .stat-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .stat-icon.blue { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .stat-icon.green { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .stat-icon.orange { background: linear-gradient(135deg, #f39c12, #e67e22); }
+        .stat-icon.red { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+
+        .stat-info h3 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-info p {
+            color: #7f8c8d;
+            font-size: 0.95rem;
+        }
+
+        /* Tabs */
+        .tabs {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+
+        .tab-buttons {
+            display: flex;
+            border-bottom: 2px solid #ecf0f1;
+            background: #f8f9fa;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 18px 25px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #7f8c8d;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tab-btn:hover {
+            background: rgba(46,204,113,0.1);
+            color: #2ecc71;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #2ecc71;
+            border-bottom: 3px solid #2ecc71;
+        }
+
+        .tab-content {
+            padding: 30px;
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Table */
+        .table-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 10px;
+            gap: 10px;
+            width: 300px;
+        }
+
+        .search-box input {
+            border: none;
+            background: none;
+            outline: none;
+            width: 100%;
+            font-size: 0.95rem;
+        }
+
+        .btn-add {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46,204,113,0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f8f9fa;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #2c3e50;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .btn-action {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-right: 5px;
+        }
+
+        .btn-edit {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-edit:hover {
+            background: #2980b9;
+        }
+
+        .btn-delete {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c0392b;
+        }
+
+        .btn-view {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #e67e22;
+        }
+
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-pending { background: #fff3cd; color: #856404; }
+        .badge-confirmed { background: #d4edda; color: #155724; }
+        .badge-cancelled { background: #f8d7da; color: #721c24; }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlide 0.3s ease;
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .modal-header h2 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #e74c3c;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ecf0f1;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2ecc71;
+            box-shadow: 0 0 0 4px rgba(46,204,113,0.1);
+        }
+
+        .form-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 25px;
+        }
+
+        .btn-cancel {
+            background: #95a5a6;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-cancel:hover {
+            background: #7f8c8d;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46,204,113,0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+
+            .topbar h1 {
+                font-size: 1.2rem;
+            }
+
+            .admin-name {
+                display: none;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            .table-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <i class="fas fa-mountain"></i>
+            <h2>Admin Panel</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="#dashboard" class="active" data-tab="dashboard"><i class="fas fa-home"></i><span>Dashboard</span></a></li>
+            <li><a href="#packages" data-tab="packages"><i class="fas fa-box"></i><span>Paket Wisata</span></a></li>
+            <li><a href="#bookings" data-tab="bookings"><i class="fas fa-calendar-check"></i><span>Pemesanan</span></a></li>
+            <li><a href="#gallery" data-tab="gallery"><i class="fas fa-images"></i><span>Galeri</span></a></li>
+            <li><a href="index.html"><i class="fas fa-globe"></i><span>Lihat Website</span></a></li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Top Bar -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="toggle-sidebar" id="toggleSidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1>Dashboard Admin</h1>
+            </div>
+            <div class="topbar-right">
+                <div class="admin-info">
+                    <div class="admin-avatar">A</div>
+                    <div class="admin-name">
+                        <strong>Admin</strong>
+                        <small>Administrator</small>
+                    </div>
+                </div>
+                <button class="btn-logout" id="btnLogout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <!-- Stats -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon blue">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalPackages">3</h3>
+                        <p>Total Paket</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon green">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalBookings">0</h3>
+                        <p>Total Pemesanan</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon orange">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="pendingBookings">0</h3>
+                        <p>Menunggu Konfirmasi</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon red">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3 id="totalGallery">6</h3>
+                        <p>Foto Galeri</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <div class="tab-buttons">
+                    <button class="tab-btn active" data-tab="packages">
+                        <i class="fas fa-box"></i> Paket Wisata
+                    </button>
+                    <button class="tab-btn" data-tab="bookings">
+                        <i class="fas fa-calendar-check"></i> Pemesanan
+                    </button>
+                    <button class="tab-btn" data-tab="gallery">
+                        <i class="fas fa-images"></i> Galeri
+                    </button>
+                </div>
+
+                <!-- Packages Tab -->
+                <div class="tab-content active" id="packagesTab">
+                    <div class="table-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cari paket wisata..." id="searchPackages">
+                        </div>
+                        <button class="btn-add" id="btnAddPackage">
+                            <i class="fas fa-plus"></i> Tambah Paket
+                        </button>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table id="packagesTable">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Paket</th>
+                                    <th>Harga</th>
+                                    <th>Kapasitas</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="packagesBody">
+                                <tr>
+                                    <td>1</td>
+                                    <td>Paket Reguler</td>
+                                    <td>Rp 50.000</td>
+                                    <td>1 orang</td>
+                                    <td>
+                                        <button class="btn-action btn-edit" onclick="editPackage(0)"><i class="fas fa-edit"></i> Edit</button>
+                                        <button class="btn-action btn-delete" onclick="deletePackage(0)"><i class="fas fa-trash"></i> Hapus</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Bookings Tab -->
+                <div class="tab-content" id="bookingsTab">
+                    <div class="table-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cari pemesanan..." id="searchBookings">
+                        </div>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Nama Pemesan</th>
+                                    <th>Paket</th>
+                                    <th>Tanggal</th>
+                                    <th>Status</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bookingsBody">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; padding: 40px;">Belum ada pemesanan</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Gallery Tab -->
+                <div class="tab-content" id="galleryTab">
+                    <div class="table-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cari foto..." id="searchGallery">
+                        </div>
+                        <button class="btn-add" id="btnAddGallery">
+                            <i class="fas fa-plus"></i> Tambah Foto
+                        </button>
+                    </div>
+                    <div style="overflow-x: auto;">
+                        <table id="galleryTable">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Judul</th>
+                                    <th>URL Foto</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="galleryBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Package -->
+    <div class="modal" id="modalPackage">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalPackageTitle">Tambah Paket Wisata</h2>
+                <button class="modal-close" onclick="closeModal('modalPackage')">&times;</button>
+            </div>
+            <form id="formPackage">
+                <div class="form-group">
+                    <label>Nama Paket</label>
+                    <input type="text" id="packageName" required>
+                </div>
+                <div class="form-group">
+                    <label>Harga</label>
+                    <input type="number" id="packagePrice" required>
+                </div>
+                <div class="form-group">
+                    <label>Kapasitas</label>
+                    <input type="text" id="packageCapacity" required>
+                </div>
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea id="packageDesc" rows="3" required></textarea>
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn-cancel" onclick="closeModal('modalPackage')">Batal</button>
+                    <button type="submit" class="btn-save">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Gallery -->
+    <div class="modal" id="modalGallery">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalGalleryTitle">Tambah Foto Galeri</h2>
+                <button class="modal-close" onclick="closeModal('modalGallery')">&times;</button>
+            </div>
+            <form id="formGallery">
+                <div class="form-group">
+                    <label>Judul Foto</label>
+                    <input type="text" id="galleryTitle" required>
+                </div>
+                <div class="form-group">
+                    <label>URL Foto</label>
+                    <input type="url" id="galleryUrl" required placeholder="https://...">
+                </div>
+                <div class="form-buttons">
+                    <button type="button" class="btn-cancel" onclick="closeModal('modalGallery')">Batal</button>
+                    <button type="submit" class="btn-save">Simpan</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin-script.js"></script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Admin - Wisata Pangradinan</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            max-width: 450px;
+            width: 100%;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .login-header i {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+
+        .login-header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .login-body {
+            padding: 40px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .form-group label i {
+            color: #2ecc71;
+            margin-right: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 18px 14px 50px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafafa;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #2ecc71;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.1);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #2ecc71;
+            font-size: 1.2rem;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-password:hover {
+            color: #2ecc71;
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .remember-me input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .forgot-password {
+            color: #2ecc71;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password:hover {
+            color: #27ae60;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(46, 204, 113, 0.4);
+        }
+
+        .btn-login:active {
+            transform: translateY(-1px);
+        }
+
+        .back-home {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid #eee;
+        }
+
+        .back-home a {
+            color: #666;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-home a:hover {
+            color: #2ecc71;
+        }
+
+        .alert {
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+
+        .alert-success {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+        }
+
+        .alert i {
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 10px;
+            }
+
+            .login-header {
+                padding: 30px 20px;
+            }
+
+            .login-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .login-body {
+                padding: 30px 20px;
+            }
+
+            .form-group input {
+                padding: 12px 16px 12px 45px;
+            }
+
+            .remember-forgot {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <i class="fas fa-mountain"></i>
+            <h1>Admin Panel</h1>
+            <p>Wisata Pangradinan</p>
+        </div>
+        
+        <div class="login-body">
+            <div class="alert alert-error" id="alertError">
+                <i class="fas fa-exclamation-circle"></i>
+                <span id="errorMessage"></span>
+            </div>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Username</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="username" placeholder="Masukkan username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> Password</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="password" placeholder="Masukkan password" required>
+                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                    </div>
+                </div>
+
+                <div class="remember-forgot">
+                    <label class="remember-me">
+                        <input type="checkbox" id="rememberMe">
+                        <span>Ingat Saya</span>
+                    </label>
+                    <a href="#" class="forgot-password">Lupa Password?</a>
+                </div>
+
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i> Masuk
+                </button>
+            </form>
+
+            <div class="back-home">
+                <a href="index.html">
+                    <i class="fas fa-home"></i>
+                    Kembali ke Beranda
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Password Visibility
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Login Form Handler
+        const loginForm = document.getElementById('loginForm');
+        const alertError = document.getElementById('alertError');
+        const errorMessage = document.getElementById('errorMessage');
+
+        // Demo credentials
+        const ADMIN_USERNAME = 'admin';
+        const ADMIN_PASSWORD = 'admin123';
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Validate credentials
+            if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+                // Store session
+                const sessionData = {
+                    username: username,
+                    loginTime: new Date().toISOString(),
+                    isAdmin: true
+                };
+
+                if (rememberMe) {
+                    sessionStorage.setItem('adminSession', JSON.stringify(sessionData));
+                }
+                
+                // Store in memory for session
+                window.adminLoggedIn = true;
+                
+                // Show success and redirect
+                alertError.classList.remove('alert-error');
+                alertError.classList.add('alert-success');
+                alertError.querySelector('i').className = 'fas fa-check-circle';
+                errorMessage.textContent = 'Login berhasil! Mengalihkan ke dashboard...';
+                alertError.style.display = 'flex';
+
+                setTimeout(() => {
+                    window.location.href = 'admin-dashboard.html';
+                }, 1500);
+            } else {
+                // Show error
+                alertError.classList.remove('alert-success');
+                alertError.classList.add('alert-error');
+                alertError.querySelector('i').className = 'fas fa-exclamation-circle';
+                errorMessage.textContent = 'Username atau password salah!';
+                alertError.style.display = 'flex';
+
+                // Shake animation
+                loginForm.style.animation = 'shake 0.5s';
+                setTimeout(() => {
+                    loginForm.style.animation = '';
+                }, 500);
+            }
+        });
+
+        // Add shake animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Check if already logged in
+        window.addEventListener('load', () => {
+            const session = sessionStorage.getItem('adminSession');
+            if (session) {
+                window.location.href = 'admin-dashboard.html';
+            }
+        });
+
+        // Info untuk developer
+        console.log('%c🔐 Demo Login Credentials', 'color: #2ecc71; font-size: 16px; font-weight: bold;');
+        console.log('%cUsername: admin', 'color: #3498db; font-size: 14px;');
+        console.log('%cPassword: admin123', 'color: #3498db; font-size: 14px;');
+    </script>
+</body>
+</html>
